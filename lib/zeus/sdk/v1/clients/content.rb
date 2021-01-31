@@ -4,9 +4,9 @@ module Zeus
     module Sdk
         module V1
             module Clients
-                class Auth
-                    SUBDOMAIN = "auth"
-                    LOCAL_PORT = 3003
+                class Content
+                    SUBDOMAIN = "content"
+                    LOCAL_PORT = 3005
 
                     include HTTParty
                     include ServiceBase
