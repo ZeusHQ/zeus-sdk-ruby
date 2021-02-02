@@ -1,3 +1,5 @@
+require "active_support"
+
 require "zeus/sdk/version"
 require "zeus/sdk/v1/clients/service_base"
 require "zeus/sdk/v1/clients/core"
