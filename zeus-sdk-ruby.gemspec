@@ -1,7 +1,7 @@
 require_relative 'lib/zeus/sdk/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "zeus-sdk"
+  spec.name          = "zeus-sdk-ruby"
   spec.version       = Zeus::Sdk::VERSION
   spec.authors       = ["Eric Campbell"]
   spec.email         = ["ericcampbell59@gmail.com"]
