@@ -15,7 +15,7 @@ module Zeus
 
                     def initialize(params)
                         if params[:zeus_auth_key] == nil && params[:public_key] == nil && params[:secret_key] == nil
-                            throw Exception, "Must initialize with public_key and secret_key"
+                            throw "Must initialize with public_key and secret_key"
                         end
 
                         @zeus_auth_key = params[:zeus_auth_key]

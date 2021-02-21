@@ -12,8 +12,10 @@ module Zeus
                     end
 
                     def self.get_base_uri
-                        return "https://api.zeusdev.co" if self.get_env == "production"
-                        return "http://localhost:3000"
+                        base_uri = "https://api.zeusdev.co" if self.get_env == "production"
+                        base_uri = "http://localhost:3000" if self.get_env != "production"
+
+                        base_uri
                     end
 
                     base_uri get_base_uri
