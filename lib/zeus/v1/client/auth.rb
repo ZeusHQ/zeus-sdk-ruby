@@ -1,7 +1,5 @@
 require "httparty"
 
-puts "Zeus Auth"
-
 module Zeus::V1::Client
     class Auth
         SUBDOMAIN = "auth"

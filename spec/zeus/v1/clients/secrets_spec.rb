@@ -1,107 +1,178 @@
+SECRETS_TEST_KEY = "sk_secrets_qBevMItbItSy9DXe7uopyA"
+Secrets = Zeus::V1::Client::Secrets
+BAD_KEY = "bad_key"
+
 RSpec.describe Zeus::V1::Client::Secrets do
-    SECRETS_TEST_KEY = "sk_secrets_qBevMItbItSy9DXe7uopyA"
-    SECRETS_TEST_UUID = SecureRandom::uuid
-    SECRETS_TEST_SCOPE = "web"
+    tests_project_environment_crud(Secrets, SECRETS_TEST_KEY)
 
-    # it "initializes with a zeus_auth_key" do
-    #     client = Zeus::V1::Client::Secrets.new({zeus_auth_key: SECRETS_TEST_KEY})
-    #     expect(client).not_to be nil
-    #     expect(client.class.format).to eq(:json)
-    #     expect(client.class.follow_redirects).to eq(true)
-    #     expect(client.class.base_uri).to eq("http://localhost:3002")
-    #     expect(client.zeus_auth_key).to eq(SECRETS_TEST_KEY)
-    # end
+    client_zeus_valid = Secrets.new({zeus_auth_key: SECRETS_TEST_KEY})
+    client_zeus_invalid = Secrets.new({zeus_auth_key:BAD_KEY })
+    env = client_zeus_valid.create_project_environment({ scope: WEB_SCOPE })
+    client_zeus_valid.environment_id = env["object"]["id"]
 
-    # it "can create a project environment with a valid zeus_auth_key" do
-    #     client = Zeus::V1::Client::Secrets.new({zeus_auth_key: SECRETS_TEST_KEY})
-    #     res = client.create_project_environment({project_id: SECRETS_TEST_UUID, scope: SECRETS_TEST_SCOPE})
-        
-    #     expect(res).not_to be nil
-    #     expect(res.parsed_response.class.name).to eq("Hash")
-    #     expect(res.parsed_response).to have_key("id")
-    #     expect(res.parsed_response).to have_key("project_id")
-    #     expect(res.parsed_response).to have_key("scope")
-    #     expect(res.parsed_response).to have_key("public_key")
-    #     expect(res.parsed_response).to have_key("secret_key")
-    #     expect(res.parsed_response).to have_key("created_at")
-    #     expect(res.parsed_response).to have_key("updated_at")
-    # end
+    client_private_valid = Zeus::V1::Client::Secrets.new({ public_key: env["object"]["public_key"], secret_key: env["object"]["secret_key"] })
+    client_public_valid = Zeus::V1::Client::Secrets.new({ public_key: env["object"]["public_key"] })
 
-    # it "can get project_environments with a valid zeus_auth_key" do
-    #     client = Zeus::V1::Client::Secrets.new({zeus_auth_key: SECRETS_TEST_KEY})
-    #     res = client.get_project_environments(SECRETS_TEST_UUID)
+    client_private_invalid = Zeus::V1::Client::Secrets.new({ public_key: BAD_KEY, secret_key: BAD_KEY })
+    client_public_invalid = Zeus::V1::Client::Secrets.new({ public_key: BAD_KEY })
 
-    #     expect(res).not_to be nil
-    #     expect(res.parsed_response.class.name).to eq("Array")
-    #     expect(res.parsed_response[0].class.name).to eq("Hash")
-    #     expect(res.parsed_response[0]).to have_key("id")
-    #     expect(res.parsed_response[0]).to have_key("project_id")
-    #     expect(res.parsed_response[0]).to have_key("scope")
-    #     expect(res.parsed_response[0]).to have_key("created_at")
-    #     expect(res.parsed_response[0]).to have_key("updated_at")
-    # end
+    
+    # VALID ZEUS CRUD
+    it "can create a secret with a valid zeus key" do
+        res = client_zeus_valid.set_secret("foo", "sekret")
 
-    # it "can't create a project environment with an invalid zeus_auth_key" do
-    #     client = Zeus::V1::Client::Secrets.new({public_key: "bad_key", secret_key: "bad_key2"})
-    #     res = client.create_project_environment({project_id: SECRETS_TEST_UUID, scope: SECRETS_TEST_SCOPE})
-
-    #     expect(res).not_to be nil
-    #     expect(res.parsed_response.class.name).to eq("Hash")
-    #     expect(res.parsed_response).to have_key("success?")
-    #     expect(res.parsed_response["success?"]).to eq(false)
-    # end
-
-    it "can list secrets with a valid zeus_auth_key" do
-        scope = "test_scope_create"
-        client = Zeus::V1::Client::Secrets.new({zeus_auth_key: SECRETS_TEST_KEY})
-        env = client.create_project_environment({project_id: SECRETS_TEST_UUID, scope: scope})
-        res = client.list_secrets({project_id: SECRETS_TEST_UUID, scope: scope})
-
-        expect(res).not_to be nil        
-        expect(res.parsed_response.class.name).to eq("Array")
-        expect(res.parsed_response.length).to eq(0)
-
-        res2 = client.list_secrets({environment_id: env["id"]})
-        expect(res2).not_to be nil
-        expect(res2.parsed_response.class.name).to eq("Array")
-        expect(res2.parsed_response.length).to eq(0)
+        expect(res.parsed_response.class.name).to eq("Hash")
+        expect(res.parsed_response).to have_key("success")
+        expect(res.parsed_response).to have_key("object")
+        expect(res.parsed_response["object"].class.name).to eq("Hash")
+        expect(res.parsed_response["object"]).to have_key("id")
+        expect(res.parsed_response["object"]).to have_key("key")
+        expect(res.parsed_response["object"]).to have_key("environment_id")
+        expect(res.parsed_response["object"]).to have_key("created_at")
+        expect(res.parsed_response["object"]).to have_key("updated_at")
+        expect(res.parsed_response["object"]).to_not have_key("value")
+        expect(res.parsed_response["object"]).to_not have_key("encrypted_value")
     end
 
-    # it "can list secrets with a valid secret_key/public_key" do
-    #     scope = "test_scope#{(rand * 100000).round}"
-    #     client = Zeus::V1::Client::Secrets.new({zeus_auth_key: SECRETS_TEST_KEY})
-    #     env = client.create_project_environment({project_id: SECRETS_TEST_UUID, scope: scope})
+    it "can list secrets with a valid zeus_auth_key" do
+        res = client_zeus_valid.list_secrets({ })
 
-    #     client2 = Zeus::V1::Client::Secrets.new({
-    #         public_key: env["public_key"], 
-    #         secret_key: env["secret_key"], 
-    #         project_id: SECRETS_TEST_UUID, 
-    #         scope: scope
-    #     })
-    #     res2 = client.list_secrets({})
+        expect(res).not_to be nil
+        expect(res.parsed_response.class.name).to eq("Hash")
+        expect(res.parsed_response).to have_key("success")
+        expect(res.parsed_response).to have_key("objects")
 
-    #     expect(res2).not_to be nil
-    #     expect(res2.parsed_response.class.name).to eq("Array")
-    # end
+        expect(res.parsed_response["objects"].class.name).to eq("Array")
+        expect(res.parsed_response["objects"].length).to eq(1)
+        expect(res.parsed_response["objects"][0].class.name).to eq("Hash")
+        expect(res.parsed_response["objects"][0]).to have_key("id")
+        expect(res.parsed_response["objects"][0]).to have_key("key")
+        expect(res.parsed_response["objects"][0]).to have_key("environment_id")
+        expect(res.parsed_response["objects"][0]).to have_key("created_at")
+        expect(res.parsed_response["objects"][0]).to have_key("updated_at")
+        expect(res.parsed_response["objects"][0]).to have_key("value")
+    end
 
-    # it "can create a secret with a valid zeus key" do
-    #     client = Zeus::V1::Client::Secrets.new({zeus_auth_key: SECRETS_TEST_KEY, project_id: SECRETS_TEST_UUID, scope: SECRETS_TEST_SCOPE})
-    #     res = client.create_secret({key: "foo", value: "sekret"})
-    # end
+    it "can get a secret with a valid zeus key" do
+        res = client_zeus_valid.get_secret("foo")
+        
+        expect(res.parsed_response.class.name).to eq("Hash")
+        expect(res.parsed_response).to have_key("success")
+        expect(res.parsed_response).to have_key("object")
+        expect(res.parsed_response["object"].class.name).to eq("Hash")
+        expect(res.parsed_response["object"]).to have_key("id")
+        expect(res.parsed_response["object"]).to have_key("key")
+        expect(res.parsed_response["object"]).to have_key("environment_id")
+        expect(res.parsed_response["object"]).to have_key("created_at")
+        expect(res.parsed_response["object"]).to have_key("updated_at")
+        expect(res.parsed_response["object"]).to have_key("value")
+    end
 
-    # it "can get a secret with a valid zeus key" do
-    #     client = Zeus::V1::Client::Secrets.new({zeus_auth_key: SECRETS_TEST_KEY, project_id: SECRETS_TEST_UUID, scope: SECRETS_TEST_SCOPE})
-    #     res = client.get_secret({key: "foo"})
+    # VALID PRIVATE CRUD
+    it "can create a secret with a valid zeus key" do
+        res = client_private_valid.set_secret("foo", "sekret")
+        
+        expect(res).not_to be nil
+        expect(res.parsed_response.class.name).to eq("Hash")
+        expect(res.parsed_response).to have_key("success")
+        expect(res.parsed_response).to have_key("object")
+        expect(res.parsed_response["object"].class.name).to eq("Hash")
+        expect(res.parsed_response["object"]).to have_key("id")
+        expect(res.parsed_response["object"]).to have_key("key")
+        expect(res.parsed_response["object"]).to have_key("environment_id")
+        expect(res.parsed_response["object"]).to have_key("created_at")
+        expect(res.parsed_response["object"]).to have_key("updated_at")
+        expect(res.parsed_response["object"]).to_not have_key("value")
+        expect(res.parsed_response["object"]).to_not have_key("encrypted_value")
+    end
 
-    #     expect(res).not_to be nil
-    #     expect(res.parsed_response.class.name).to eq("Hash")
-    #     expect(res.parsed_response).to have_key("id")
-    #     expect(res.parsed_response).to have_key("key")
-    #     expect(res.parsed_response).to have_key("zeus_service_engine_project_environment_id")
-    #     expect(res.parsed_response).to have_key("created_at")
-    #     expect(res.parsed_response).to have_key("updated_at")
+    it "can list secrets with a valid secret_key/public_key" do
+        res = client_private_valid.list_secrets({})
 
-    #     expect(res.parsed_response).to_not have_key("value")
-    #     expect(res.parsed_response).to_not have_key("encrypted_value")
-    # end
+        expect(res).not_to be nil
+        expect(res.parsed_response.class.name).to eq("Hash")
+        expect(res.parsed_response).to have_key("success")
+        expect(res.parsed_response).to have_key("objects")
+
+        expect(res.parsed_response["objects"].class.name).to eq("Array")
+        expect(res.parsed_response["objects"].length).to eq(1)
+        expect(res.parsed_response["objects"][0].class.name).to eq("Hash")
+        expect(res.parsed_response["objects"][0]).to have_key("id")
+        expect(res.parsed_response["objects"][0]).to have_key("key")
+        expect(res.parsed_response["objects"][0]).to have_key("environment_id")
+        expect(res.parsed_response["objects"][0]).to have_key("created_at")
+        expect(res.parsed_response["objects"][0]).to have_key("updated_at")
+        expect(res.parsed_response["objects"][0]).to have_key("value")
+        expect(res.parsed_response["objects"][0]).to_not have_key("encrypted_value")
+    end
+
+    # VALID PUBLIC CRUD
+    it "can't create a secret with a valid public key" do
+        res = client_public_valid.set_secret("foo", "sekret")
+        expect(res.parsed_response.class.name).to eq("Hash")
+        expect(res.parsed_response).to have_key("success")
+        expect(res.parsed_response["success"]).to eq(false)
+    end
+
+    it "can't list secrets with a valid public key" do
+        res = client_public_valid.list_secrets({})
+
+        expect(res).not_to be nil
+        expect(res.parsed_response.class.name).to eq("Hash")
+        expect(res.parsed_response).to have_key("success")
+        expect(res.parsed_response["success"]).to eq(false)
+    end
+
+    # INVALID ZEUS CRUD
+    it "can't create a secret with an invalid zeus key" do
+        res = client_zeus_invalid.set_secret( "foo", "sekret")
+        expect(res.parsed_response.class.name).to eq("Hash")
+        expect(res.parsed_response).to have_key("success")
+        expect(res.parsed_response["success"]).to eq(false)
+    end
+
+    it "can't list secrets with an invalid zeus key" do
+        res = client_zeus_invalid.list_secrets({})
+
+        expect(res).not_to be nil
+        expect(res.parsed_response.class.name).to eq("Hash")
+        expect(res.parsed_response).to have_key("success")
+        expect(res.parsed_response["success"]).to eq(false)
+    end
+
+    # INVALID PRIVATE CRUD
+    it "can't create a secret with an invalid private key" do
+        res = client_private_invalid.set_secret("foo", "sekret")
+        expect(res.parsed_response.class.name).to eq("Hash")
+        expect(res.parsed_response).to have_key("success")
+        expect(res.parsed_response["success"]).to eq(false)
+    end
+
+    it "can't list secrets with an invalid private key" do
+        res = client_private_invalid.list_secrets({})
+
+        expect(res).not_to be nil
+        expect(res.parsed_response.class.name).to eq("Hash")
+        expect(res.parsed_response).to have_key("success")
+        expect(res.parsed_response["success"]).to eq(false)
+    end
+
+    # INVALID PUBLIC CRUD
+    it "can't create a secret with an invalid private key" do
+        res = client_public_invalid.set_secret("foo", "sekret")
+        expect(res.parsed_response.class.name).to eq("Hash")
+        expect(res.parsed_response).to have_key("success")
+        expect(res.parsed_response["success"]).to eq(false)
+    end
+
+    it "can't list secrets with an invalid private key" do
+        res = client_public_invalid.list_secrets({})
+
+        expect(res).not_to be nil
+        expect(res.parsed_response.class.name).to eq("Hash")
+        expect(res.parsed_response).to have_key("success")
+        expect(res.parsed_response["success"]).to eq(false)
+    end
+
+
 end

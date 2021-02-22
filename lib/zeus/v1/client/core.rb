@@ -1,7 +1,5 @@
 require "httparty"
 
-puts "Zeus Core"
-
 module Zeus::V1::Client
     class Core
         include HTTParty
@@ -11,7 +9,7 @@ module Zeus::V1::Client
         end
 
         def self.get_base_uri
-            base_uri = "https://api.zeusdev.co" if self.get_env == "production"
+            base_uri = "https://api.zeusdev.io" if self.get_env == "production"
             base_uri = "http://localhost:3000" if self.get_env != "production"
 
             base_uri

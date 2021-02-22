@@ -1,7 +1,5 @@
 require "httparty"
 
-puts "Zeus Assets"
-
 module Zeus::V1::Client
     class Assets
         SUBDOMAIN = "assets"

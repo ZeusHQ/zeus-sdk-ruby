@@ -6,7 +6,7 @@ RSpec.describe Zeus::V1::Client::Core do
   
     it "can check domain existence" do
         client = Zeus::V1::Client::Core.new("")
-        res = client.check_domain("abc123.zeusdev.co")
+        res = client.check_domain("abc123.zeusdev.io")
         expect(res).not_to be nil
         expect(res.parsed_response.class.name).to eq("Hash")
         expect(res.parsed_response).to have_key("exists")

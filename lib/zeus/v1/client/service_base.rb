@@ -1,13 +1,12 @@
 require "httparty"
-
-puts "Zeus ServiceBase"
+require "json"
 
 module Zeus::V1::Client
     module ServiceBase
         def self.included(klass)
             klass.format :json
             klass.follow_redirects true
-            klass.base_uri Zeus::IS_PRODUCTION ? "https://#{klass::SUBDOMAIN}.zeusdev.co" : "http://localhost:#{klass::LOCAL_PORT}"
+            klass.base_uri Zeus::IS_PRODUCTION ? "https://#{klass::SUBDOMAIN}.zeusdev.io" : "http://localhost:#{klass::LOCAL_PORT}"
         end
         
         attr_accessor :zeus_auth_key, :public_key, :secret_key, :project_id, :scope, :environment_id
@@ -33,20 +32,22 @@ module Zeus::V1::Client
             headers["X-ZEUS-SERVICE-PUBLIC-KEY"] = self.public_key if self.public_key.present?
             headers["X-ZEUS-SERVICE-SECRET-KEY"] = self.secret_key if self.secret_key.present?
             
-
-            headers["X-ZEUS-PROJECT-ID"] = self.project_id if self.project_id.present?
             headers["X-ZEUS-SCOPE"] = self.scope if self.scope.present?
             headers["X-ZEUS-ENVIRONMENT-ID"] = self.environment_id if self.environment_id.present?
 
             headers
         end
 
-        def get_project_environments(project_id)
-            self.class.get("/api/v1/project_environments", query: {project_id: project_id}, headers: self.get_headers)
+        def get_project_environments(ids)
+            self.class.get("/api/v1/project_environments", query: {ids: ids}, headers: self.get_headers)
         end
 
         def create_project_environment(project_environment)
             self.class.post("/api/v1/project_environments", body: {project_environment: project_environment}, headers: self.get_headers)
+        end
+
+        def destroy_project_environment(id)
+            self.class.delete("/api/v1/project_environments/#{id}", body: {}, headers: self.get_headers)
         end
     end
 end

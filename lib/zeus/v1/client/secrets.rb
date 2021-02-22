@@ -1,7 +1,5 @@
 require "httparty"
 
-puts "Zeus Secrets"
-
 module Zeus::V1::Client
     class Secrets
         SUBDOMAIN = "secrets"
@@ -14,14 +12,16 @@ module Zeus::V1::Client
             self.class.get("/api/v1/secrets", query: query, headers: self.get_headers)
         end
 
-        def create_secret(secret)
-            self.class.post("/api/v1/secrets", body: {secret: secret}, headers: self.get_headers)
+        def get_secret(key)
+            self.class.get("/api/v1/secrets/#{key}", headers: self.get_headers)
         end
 
-        def get_secret(query)
-            key = query.delete("key")
-            self.class.get("/api/v1/secrets/#{key}", query: query, headers: self.get_headers)
+        def set_secret(key, value)
+            self.class.post("/api/v1/secrets", body: {secret: {key: key, value: value}}, headers: self.get_headers)
+        end
+
+        def delete_secret(key)
+            self.class.post("/api/v1/secrets/#{key}", headers: self.get_headers)
         end
     end
 end
-  

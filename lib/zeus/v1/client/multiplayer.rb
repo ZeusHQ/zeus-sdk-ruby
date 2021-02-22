@@ -1,12 +1,11 @@
 require "httparty"
 
 module Zeus::V1::Client
-    class Content
-        SUBDOMAIN = "content"
-        LOCAL_PORT = 3005
+    class Multiplayer
+        SUBDOMAIN = "multiplayer"
+        LOCAL_PORT = 3006
 
         include HTTParty
         include ServiceBase
     end
 end
-  

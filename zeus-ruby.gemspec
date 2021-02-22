@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{Ruby SDK for Zeus APIs}
   spec.description   = %q{Ruby SDK for Zeus APIs}
-  spec.homepage      = "https://www.zeusdev.co"
+  spec.homepage      = "https://www.zeusdev.io"
   spec.license       = "MIT"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.3.0")
 
