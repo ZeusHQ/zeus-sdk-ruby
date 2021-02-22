@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    zeus-sdk-ruby (0.1.0)
+    zeus (0.1.5)
       activesupport
       httparty
 
@@ -51,7 +51,7 @@ DEPENDENCIES
   activesupport
   rake (~> 12.0)
   rspec (~> 3.0)
-  zeus-sdk-ruby!
+  zeus!
 
 BUNDLED WITH
    2.2.7

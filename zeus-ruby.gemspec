@@ -1,8 +1,8 @@
-require_relative 'lib/zeus/sdk/version'
+require File.expand_path('lib/zeus/version', __dir__)
 
 Gem::Specification.new do |spec|
-  spec.name          = "zeus-sdk-ruby"
-  spec.version       = Zeus::Sdk::VERSION
+  spec.name          = "zeus"
+  spec.version       = Zeus::VERSION
   spec.authors       = ["Eric Campbell"]
   spec.email         = ["ericcampbell59@gmail.com"]
 
@@ -23,10 +23,12 @@ Gem::Specification.new do |spec|
   # spec.files         = Dir.chdir(File.expand_path('..', __FILE__)) do
   #   `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   # end
-  spec.files = Dir['lib/**/*.rb']
-  spec.bindir        = "exe"
-  spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
+  # spec.files = Dir['lib/**/*.rb']
   spec.require_paths = ["lib"]
+
+  spec.files = Dir['README.md', 'LICENSE', 'CHANGELOG.md', 'lib/**/*.rb',
+    'lib/**/*.rake', 'zeus-ruby.gemspec', '.github/*.md', 'Gemfile', 'Rakefile']
+
   spec.add_dependency("httparty")
   spec.add_dependency("activesupport")
 end

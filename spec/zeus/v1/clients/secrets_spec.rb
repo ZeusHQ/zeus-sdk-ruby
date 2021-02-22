@@ -1,10 +1,10 @@
-RSpec.describe Zeus::Sdk::V1::Clients::Secrets do
+RSpec.describe Zeus::V1::Client::Secrets do
     SECRETS_TEST_KEY = "sk_secrets_qBevMItbItSy9DXe7uopyA"
     SECRETS_TEST_UUID = SecureRandom::uuid
     SECRETS_TEST_SCOPE = "web"
 
     # it "initializes with a zeus_auth_key" do
-    #     client = Zeus::Sdk::V1::Clients::Secrets.new({zeus_auth_key: SECRETS_TEST_KEY})
+    #     client = Zeus::V1::Client::Secrets.new({zeus_auth_key: SECRETS_TEST_KEY})
     #     expect(client).not_to be nil
     #     expect(client.class.format).to eq(:json)
     #     expect(client.class.follow_redirects).to eq(true)
@@ -13,7 +13,7 @@ RSpec.describe Zeus::Sdk::V1::Clients::Secrets do
     # end
 
     # it "can create a project environment with a valid zeus_auth_key" do
-    #     client = Zeus::Sdk::V1::Clients::Secrets.new({zeus_auth_key: SECRETS_TEST_KEY})
+    #     client = Zeus::V1::Client::Secrets.new({zeus_auth_key: SECRETS_TEST_KEY})
     #     res = client.create_project_environment({project_id: SECRETS_TEST_UUID, scope: SECRETS_TEST_SCOPE})
         
     #     expect(res).not_to be nil
@@ -28,7 +28,7 @@ RSpec.describe Zeus::Sdk::V1::Clients::Secrets do
     # end
 
     # it "can get project_environments with a valid zeus_auth_key" do
-    #     client = Zeus::Sdk::V1::Clients::Secrets.new({zeus_auth_key: SECRETS_TEST_KEY})
+    #     client = Zeus::V1::Client::Secrets.new({zeus_auth_key: SECRETS_TEST_KEY})
     #     res = client.get_project_environments(SECRETS_TEST_UUID)
 
     #     expect(res).not_to be nil
@@ -42,7 +42,7 @@ RSpec.describe Zeus::Sdk::V1::Clients::Secrets do
     # end
 
     # it "can't create a project environment with an invalid zeus_auth_key" do
-    #     client = Zeus::Sdk::V1::Clients::Secrets.new({public_key: "bad_key", secret_key: "bad_key2"})
+    #     client = Zeus::V1::Client::Secrets.new({public_key: "bad_key", secret_key: "bad_key2"})
     #     res = client.create_project_environment({project_id: SECRETS_TEST_UUID, scope: SECRETS_TEST_SCOPE})
 
     #     expect(res).not_to be nil
@@ -53,7 +53,7 @@ RSpec.describe Zeus::Sdk::V1::Clients::Secrets do
 
     it "can list secrets with a valid zeus_auth_key" do
         scope = "test_scope_create"
-        client = Zeus::Sdk::V1::Clients::Secrets.new({zeus_auth_key: SECRETS_TEST_KEY})
+        client = Zeus::V1::Client::Secrets.new({zeus_auth_key: SECRETS_TEST_KEY})
         env = client.create_project_environment({project_id: SECRETS_TEST_UUID, scope: scope})
         res = client.list_secrets({project_id: SECRETS_TEST_UUID, scope: scope})
 
@@ -69,10 +69,10 @@ RSpec.describe Zeus::Sdk::V1::Clients::Secrets do
 
     # it "can list secrets with a valid secret_key/public_key" do
     #     scope = "test_scope#{(rand * 100000).round}"
-    #     client = Zeus::Sdk::V1::Clients::Secrets.new({zeus_auth_key: SECRETS_TEST_KEY})
+    #     client = Zeus::V1::Client::Secrets.new({zeus_auth_key: SECRETS_TEST_KEY})
     #     env = client.create_project_environment({project_id: SECRETS_TEST_UUID, scope: scope})
 
-    #     client2 = Zeus::Sdk::V1::Clients::Secrets.new({
+    #     client2 = Zeus::V1::Client::Secrets.new({
     #         public_key: env["public_key"], 
     #         secret_key: env["secret_key"], 
     #         project_id: SECRETS_TEST_UUID, 
@@ -85,12 +85,12 @@ RSpec.describe Zeus::Sdk::V1::Clients::Secrets do
     # end
 
     # it "can create a secret with a valid zeus key" do
-    #     client = Zeus::Sdk::V1::Clients::Secrets.new({zeus_auth_key: SECRETS_TEST_KEY, project_id: SECRETS_TEST_UUID, scope: SECRETS_TEST_SCOPE})
+    #     client = Zeus::V1::Client::Secrets.new({zeus_auth_key: SECRETS_TEST_KEY, project_id: SECRETS_TEST_UUID, scope: SECRETS_TEST_SCOPE})
     #     res = client.create_secret({key: "foo", value: "sekret"})
     # end
 
     # it "can get a secret with a valid zeus key" do
-    #     client = Zeus::Sdk::V1::Clients::Secrets.new({zeus_auth_key: SECRETS_TEST_KEY, project_id: SECRETS_TEST_UUID, scope: SECRETS_TEST_SCOPE})
+    #     client = Zeus::V1::Client::Secrets.new({zeus_auth_key: SECRETS_TEST_KEY, project_id: SECRETS_TEST_UUID, scope: SECRETS_TEST_SCOPE})
     #     res = client.get_secret({key: "foo"})
 
     #     expect(res).not_to be nil

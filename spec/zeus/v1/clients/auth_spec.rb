@@ -1,10 +1,10 @@
-RSpec.describe Zeus::Sdk::V1::Clients::Auth do
+RSpec.describe Zeus::V1::Client::Auth do
     AUTH_TEST_KEY = "sk_auth_qBevMItbItSy9DXe7uopyA"
     AUTH_TEST_UUID = SecureRandom::uuid
     AUTH_TEST_SCOPE = "all"
 
     it "initializes with a zeus_auth_key" do
-        client = Zeus::Sdk::V1::Clients::Auth.new({zeus_auth_key: AUTH_TEST_KEY})
+        client = Zeus::V1::Client::Auth.new({zeus_auth_key: AUTH_TEST_KEY})
         
         expect(client).not_to be nil
         expect(client.class.format).to eq(:json)
@@ -14,7 +14,7 @@ RSpec.describe Zeus::Sdk::V1::Clients::Auth do
     end
 
     it "can create a project environment with a valid zeus_auth_key" do
-        client = Zeus::Sdk::V1::Clients::Auth.new({zeus_auth_key: AUTH_TEST_KEY})
+        client = Zeus::V1::Client::Auth.new({zeus_auth_key: AUTH_TEST_KEY})
         res = client.create_project_environment({project_id: AUTH_TEST_UUID, scope: AUTH_TEST_SCOPE})
         
         expect(res).not_to be nil
@@ -29,7 +29,7 @@ RSpec.describe Zeus::Sdk::V1::Clients::Auth do
     end
 
     it "can get project_environments with a valid zeus_auth_key" do
-        client = Zeus::Sdk::V1::Clients::Auth.new({zeus_auth_key: AUTH_TEST_KEY})
+        client = Zeus::V1::Client::Auth.new({zeus_auth_key: AUTH_TEST_KEY})
         res = client.get_project_environments(AUTH_TEST_UUID)
 
         expect(res).not_to be nil
@@ -43,7 +43,7 @@ RSpec.describe Zeus::Sdk::V1::Clients::Auth do
     end
 
     it "can't create a project environment with an invalid zeus_auth_key" do
-        client = Zeus::Sdk::V1::Clients::Auth.new({public_key: "bad_key", secret_key: "bad_key2"})
+        client = Zeus::V1::Client::Auth.new({public_key: "bad_key", secret_key: "bad_key2"})
         res = client.create_project_environment({project_id: AUTH_TEST_UUID, scope: AUTH_TEST_SCOPE})
 
         expect(res).not_to be nil

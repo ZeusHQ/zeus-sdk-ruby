@@ -1,11 +1,11 @@
-RSpec.describe Zeus::Sdk::V1::Clients::Core do
+RSpec.describe Zeus::V1::Client::Core do
     it "initializes" do
-        client = Zeus::Sdk::V1::Clients::Core.new("test")
+        client = Zeus::V1::Client::Core.new("test")
         expect(client).not_to be nil
     end
   
     it "can check domain existence" do
-        client = Zeus::Sdk::V1::Clients::Core.new("")
+        client = Zeus::V1::Client::Core.new("")
         res = client.check_domain("abc123.zeusdev.co")
         expect(res).not_to be nil
         expect(res.parsed_response.class.name).to eq("Hash")
