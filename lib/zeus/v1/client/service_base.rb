@@ -42,6 +42,10 @@ module Zeus::V1::Client
             self.class.get("/api/v1/project_environments", query: {ids: ids}, headers: self.get_headers)
         end
 
+        def get_project_environment(id)
+            self.class.get("/api/v1/project_environments/#{id}", headers: self.get_headers)
+        end
+
         def create_project_environment(project_environment)
             self.class.post("/api/v1/project_environments", body: {project_environment: project_environment}, headers: self.get_headers)
         end

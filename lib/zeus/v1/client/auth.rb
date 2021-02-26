@@ -1,4 +1,5 @@
 require "httparty"
+require "jwt"
 
 module Zeus::V1::Client
     class Auth
@@ -9,15 +10,36 @@ module Zeus::V1::Client
         include ServiceBase
 
         def list_users(query)
-            self.class.get("/api/v1/users", query: query, headers: self.get_headers)
+            res= self.class.get("/api/v1/users", query: query, headers: self.get_headers).parsed_response
         end
 
         def signup_with_email_password(user)
-            self.class.post("/api/v1/users", body: {user: user}, headers: self.get_headers)
+            resp = self.class.post("/api/v1/users", body: {user: user}, headers: self.get_headers).parsed_response
         end
 
         def get_user(id)
-            self.class.get("/api/v1/users/#{id}", headers: self.get_headers)
+            resp = self.class.get("/api/v1/users/#{id}", headers: self.get_headers).parsed_response
+            if resp["success"] == true
+                return User.new(resp["object"])
+            else
+                return null
+            end
+        end
+    end
+
+    class AuthJWT
+        class << self
+            def encode(payload, exp = 6.months.from_now)
+                payload[:exp] = exp.to_i
+                JWT.encode(payload, ENV["ZEUS_AUTH_SECRET_KEY"])
+            end
+       
+            def decode(token)
+                body = JWT.decode(token, ENV["ZEUS_AUTH_SECRET_KEY"])[0]
+                HashWithIndifferentAccess.new body
+            rescue
+                nil
+            end
         end
     end
 end
