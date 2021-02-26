@@ -10,7 +10,12 @@ module Zeus::V1::Client
         include ServiceBase
 
         def list_users(query)
-            res= self.class.get("/api/v1/users", query: query, headers: self.get_headers).parsed_response
+            resp = self.class.get("/api/v1/users", query: query, headers: self.get_headers).parsed_response
+            if resp["success"] == true
+                return resp["objects"].map {|u| User.new(u) }
+            else
+                return null
+            end
         end
 
         def signup_with_email_password(user)

@@ -15,7 +15,10 @@ module Zeus
       require "zeus/v1/client/assets"
       require "zeus/v1/client/content"
       require "zeus/v1/client/multiplayer"
+      # models
       require "zeus/v1/client/models/auth/user"
+      require "zeus/v1/client/models/multiplayer/document"
+      require "zeus/v1/client/models/multiplayer/node"
     end
   end
 end
