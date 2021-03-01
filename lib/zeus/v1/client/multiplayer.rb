@@ -13,7 +13,7 @@ module Zeus::V1::Client
             if resp["success"] == true
                 return resp["objects"].map {|d| Document.new(d) }
             else
-                return null
+                return nil
             end
         end
 
@@ -22,7 +22,7 @@ module Zeus::V1::Client
             if resp["success"] == true
                 return Document.new(resp["object"])
             else
-                return null
+                return nil
             end
         end
 
@@ -31,7 +31,7 @@ module Zeus::V1::Client
             if resp["success"] == true
                 return Document.new(resp["object"])
             else
-                return null
+                return nil
             end
         end
 
@@ -40,7 +40,7 @@ module Zeus::V1::Client
             if resp["success"] == true
                 return Document.new(resp["object"])
             else
-                return null
+                return nil
             end
         end
 
@@ -49,7 +49,7 @@ module Zeus::V1::Client
             if resp["success"] == true
                 return Document.new(resp["object"])
             else
-                return null
+                return nil
             end
         end
 
@@ -58,7 +58,7 @@ module Zeus::V1::Client
             if resp["success"] == true
                 return resp["objects"].map {|d| Node.new(d) }
             else
-                return null
+                return nil
             end
         end
 
@@ -67,7 +67,7 @@ module Zeus::V1::Client
             if resp["success"] == true
                 return Node.new(resp["object"])
             else
-                return null
+                return nil
             end
         end
 
@@ -76,7 +76,7 @@ module Zeus::V1::Client
             if resp["success"] == true
                 return Node.new(resp["object"])
             else
-                return null
+                return nil
             end
         end
 
@@ -85,7 +85,7 @@ module Zeus::V1::Client
             if resp["success"] == true
                 return Node.new(resp["object"])
             else
-                return null
+                return nil
             end
         end
 
@@ -94,7 +94,27 @@ module Zeus::V1::Client
             if resp["success"] == true
                 return Node.new(resp["object"])
             else
-                return null
+                return nil
+            end
+        end
+    end
+
+    class MultiplayerJWT
+        class << self
+            def encode(secret_key, payload, exp = 6.months.from_now)
+                # payload[:exp] = exp.to_i
+                payload = payload.to_json if payload.class != String
+                JWT.encode(payload, secret_key)
+            end
+       
+            def decode(secret_key, token)
+                decoded = JWT.decode(token, secret_key)
+                body = decoded[0]
+                HashWithIndifferentAccess.new JSON.parse(body)
+            rescue Exception => e
+                puts("ERROR DECODING TOKEN")
+                puts(e.inspect)
+                nil
             end
         end
     end

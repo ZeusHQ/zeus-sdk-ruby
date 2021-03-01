@@ -12,5 +12,22 @@ module Zeus::V1::Client
             self.created_at = user["created_at"]
             self.updated_at = user["updated_at"]
         end
+
+        def as_json(options={})
+            {
+                id: self.id,
+                name: self.name,
+                first_name: self.first_name,
+                last_name: self.last_name,
+                email: self.email,
+                email_verified: self.email_verified,
+                created_at: self.created_at,
+                updated_at: self.updated_at
+            }
+        end
+
+        def to_json(options={})
+            self.as_json(options).to_json
+        end
     end
 end

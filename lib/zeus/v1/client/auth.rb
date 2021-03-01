@@ -14,7 +14,7 @@ module Zeus::V1::Client
             if resp["success"] == true
                 return resp["objects"].map {|u| User.new(u) }
             else
-                return null
+                return nil
             end
         end
 
@@ -27,7 +27,7 @@ module Zeus::V1::Client
             if resp["success"] == true
                 return User.new(resp["object"])
             else
-                return null
+                return nil
             end
         end
     end

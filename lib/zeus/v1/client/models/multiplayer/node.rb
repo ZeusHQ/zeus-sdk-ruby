@@ -10,5 +10,16 @@ module Zeus::V1::Client
             self.created_at = node["created_at"]
             self.updated_at = node["updated_at"]
         end
+
+        def as_json(options={})
+            return {
+                id: self.id,
+                name: self.name,
+                type: self.type,
+                properties: self.properties,
+                created_at: self.created_at,
+                updated_at: self.updated_at
+            }
+        end
     end
 end
