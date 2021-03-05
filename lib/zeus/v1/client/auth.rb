@@ -19,7 +19,17 @@ module Zeus::V1::Client
         end
 
         def signup_with_email_password(user)
-            resp = self.class.post("/api/v1/users", body: {user: user}, headers: self.get_headers).parsed_response
+            resp = self.class.post("/api/v1/users", body: {user: user}.to_json, headers: self.get_headers).parsed_response
+        end
+
+        def get_users(query)
+            resp = self.class.get("/api/v1/users", query: query, headers: self.get_headers).parsed_response
+
+            if resp["success"] == true
+                return resp["objects"].map {|u| User.new(u) }
+            else
+                return nil
+            end
         end
 
         def get_user(id)

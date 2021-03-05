@@ -3,14 +3,15 @@ module Zeus::V1::Client
         attr_accessor :id, :name, :email, :email_verified, :first_name, :last_name, :created_at, :updated_at
 
         def initialize(user)
-            self.id = user["id"]
-            self.name = user["name"]
-            self.first_name = user["first_name"]
-            self.last_name = user["last_name"]
-            self.email = user["email"]
-            self.email_verified = user["email_verified"]
-            self.created_at = user["created_at"]
-            self.updated_at = user["updated_at"]
+            return if user.blank?
+            self.id = user["id"] if user.has_key?("id")
+            self.name = user["name"] if user.has_key?("name")
+            self.first_name = user["first_name"] if user.has_key?("first_name")
+            self.last_name = user["last_name"] if user.has_key?("last_name")
+            self.email = user["email"] if user.has_key?("email")
+            self.email_verified = user["email_verified"] if user.has_key?("email_verified")
+            self.created_at = user["created_at"] if user.has_key?("created_at")
+            self.updated_at = user["updated_at"] if user.has_key?("updated_at")
         end
 
         def as_json(options={})

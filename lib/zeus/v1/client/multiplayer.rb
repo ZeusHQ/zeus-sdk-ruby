@@ -18,7 +18,7 @@ module Zeus::V1::Client
         end
 
         def create_document(document)
-            resp = self.class.post("/api/v1/documents", body: {document: document}, headers: self.get_headers).parsed_response
+            resp = self.class.post("/api/v1/documents", body: {document: document}.to_json, headers: self.get_headers).parsed_response
             if resp["success"] == true
                 return Document.new(resp["object"])
             else
@@ -36,7 +36,7 @@ module Zeus::V1::Client
         end
 
         def update_document(id, document)
-            resp = self.class.put("/api/v1/documents/#{id}", body: {document: document}, headers: self.get_headers).parsed_response
+            resp = self.class.put("/api/v1/documents/#{id}", body: {document: document}.to_json, headers: self.get_headers).parsed_response
             if resp["success"] == true
                 return Document.new(resp["object"])
             else
@@ -63,8 +63,15 @@ module Zeus::V1::Client
         end
 
         def create_node(node)
-            resp = self.class.post("/api/v1/nodes", body: {node: node}, headers: self.get_headers).parsed_response
+            
+            puts("*"*200)
+            puts("create_node")
+            puts(node.inspect)
+            puts("*"*200)
+            resp = self.class.post("/api/v1/nodes", body: {node: node}.to_json, headers: self.get_headers).parsed_response
             if resp["success"] == true
+                puts("resp")
+                puts(resp["object"].inspect)
                 return Node.new(resp["object"])
             else
                 return nil
@@ -81,7 +88,7 @@ module Zeus::V1::Client
         end
 
         def update_node(id, node)
-            resp = self.class.put("/api/v1/nodes/#{id}", body: {node: node}, headers: self.get_headers).parsed_response
+            resp = self.class.put("/api/v1/nodes/#{id}", body: {node: node}.to_json, headers: self.get_headers).parsed_response
             if resp["success"] == true
                 return Node.new(resp["object"])
             else

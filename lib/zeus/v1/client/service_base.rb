@@ -25,7 +25,9 @@ module Zeus::V1::Client
         end
 
         def get_headers
-            headers = {}
+            headers = {
+                'Content-Type' => 'application/json'
+            }
 
             headers["X-ZEUS-AUTH-KEY"] = self.zeus_auth_key if self.zeus_auth_key.present?
         
