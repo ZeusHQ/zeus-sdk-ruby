@@ -1,7 +1,7 @@
 require File.expand_path('lib/zeus/version', __dir__)
 
 Gem::Specification.new do |spec|
-  spec.name          = "zeus"
+  spec.name          = "zeus_ruby"
   spec.version       = Zeus::VERSION
   spec.authors       = ["Eric Campbell"]
   spec.email         = ["ericcampbell59@gmail.com"]
@@ -15,21 +15,15 @@ Gem::Specification.new do |spec|
   # spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
 
   spec.metadata["homepage_uri"] = spec.homepage
-  # spec.metadata["source_code_uri"] = "TODO: Put your gem's public repo URL here."
+  spec.metadata["source_code_uri"] = "https://github.com/ZeusHQ/zeus-ruby"
   # spec.metadata["changelog_uri"] = "TODO: Put your gem's CHANGELOG.md URL here."
 
-  # Specify which files should be added to the gem when it is released.
-  # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
-  # spec.files         = Dir.chdir(File.expand_path('..', __FILE__)) do
-  #   `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
-  # end
-  # spec.files = Dir['lib/**/*.rb']
   spec.require_paths = ["lib"]
 
   spec.files = Dir['README.md', 'LICENSE', 'CHANGELOG.md', 'lib/**/*.rb',
     'lib/**/*.rake', 'zeus-ruby.gemspec', '.github/*.md', 'Gemfile', 'Rakefile']
 
-  spec.add_dependency("httparty")
-  spec.add_dependency("activesupport")
-  spec.add_dependency("jwt")
+  spec.add_dependency("httparty", "~> 0.18.1")
+  spec.add_dependency("activesupport", "~> 6.1.1")
+  spec.add_dependency("jwt", "~> 2.2.2")
 end
