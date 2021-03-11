@@ -49,7 +49,7 @@ module Zeus::V1::Client
         end
 
         def create_project_environment(project_environment)
-            self.class.post("/api/v1/project_environments", body: {project_environment: project_environment}, headers: self.get_headers)
+            self.class.post("/api/v1/project_environments", body: {project_environment: project_environment}.to_json, headers: self.get_headers)
         end
 
         def destroy_project_environment(id)

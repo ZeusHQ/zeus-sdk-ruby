@@ -63,15 +63,8 @@ module Zeus::V1::Client
         end
 
         def create_node(node)
-            
-            puts("*"*200)
-            puts("create_node")
-            puts(node.inspect)
-            puts("*"*200)
             resp = self.class.post("/api/v1/nodes", body: {node: node}.to_json, headers: self.get_headers).parsed_response
             if resp["success"] == true
-                puts("resp")
-                puts(resp["object"].inspect)
                 return Node.new(resp["object"])
             else
                 return nil

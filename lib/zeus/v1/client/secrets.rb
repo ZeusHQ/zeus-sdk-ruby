@@ -17,7 +17,7 @@ module Zeus::V1::Client
         end
 
         def set_secret(key, value)
-            self.class.post("/api/v1/secrets", body: {secret: {key: key, value: value}}, headers: self.get_headers)
+            self.class.post("/api/v1/secrets", body: {secret: {key: key, value: value}}.to_json, headers: self.get_headers)
         end
 
         def delete_secret(key)
