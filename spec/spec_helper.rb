@@ -1,5 +1,5 @@
 require "bundler/setup"
-require "zeus"
+require "zeus_client"
 require "helpers"
 
 RSpec.configure do |config|
