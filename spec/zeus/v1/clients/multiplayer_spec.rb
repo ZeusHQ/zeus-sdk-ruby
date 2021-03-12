@@ -1,6 +1,6 @@
 MULTIPLAYER_TEST_KEY = "sk_multiplayer_qBevMItbItSy9DXe7uopyA"
-Multiplayer = Zeus::V1::Client::Multiplayer
+Multiplayer = ZeusClient::V1::Multiplayer
 
-RSpec.describe Zeus::V1::Client::Multiplayer do
+RSpec.describe ZeusClient::V1::Multiplayer do
     tests_project_environment_crud(Multiplayer, MULTIPLAYER_TEST_KEY)
 end

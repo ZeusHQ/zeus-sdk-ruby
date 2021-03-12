@@ -1,3 +1,3 @@
-module Zeus
-  VERSION = "0.4.4"
+module ZeusClient
+  VERSION = "0.4.5"
 end

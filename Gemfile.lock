@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    zeus_ruby (0.4.3)
+    zeus_ruby (0.4.5)
       activesupport (~> 6.1.1)
       httparty (~> 0.18.1)
       jwt (~> 2.2.2)

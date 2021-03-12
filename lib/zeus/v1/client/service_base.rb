@@ -1,12 +1,12 @@
 require "httparty"
 require "json"
 
-module Zeus::V1::Client
+module ZeusClient::V1
     module ServiceBase
         def self.included(klass)
             klass.format :json
             klass.follow_redirects true
-            klass.base_uri Zeus::IS_PRODUCTION ? "https://#{klass::SUBDOMAIN}.zeusdev.io" : "http://localhost:#{klass::LOCAL_PORT}"
+            klass.base_uri ZeusClient::IS_PRODUCTION ? "https://#{klass::SUBDOMAIN}.zeusdev.io" : "http://localhost:#{klass::LOCAL_PORT}"
         end
         
         attr_accessor :zeus_auth_key, :public_key, :secret_key, :project_id, :scope, :environment_id

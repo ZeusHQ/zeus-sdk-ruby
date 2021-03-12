@@ -1,11 +1,11 @@
-RSpec.describe Zeus::V1::Client::Core do
+RSpec.describe ZeusClient::V1::Core do
     it "initializes" do
-        client = Zeus::V1::Client::Core.new("test")
+        client = ZeusClient::V1::Core.new("test")
         expect(client).not_to be nil
     end
   
     it "can check domain existence" do
-        client = Zeus::V1::Client::Core.new("")
+        client = ZeusClient::V1::Core.new("")
         res = client.check_domain("abc123.zeusdev.io")
         
         expect(res).not_to be nil

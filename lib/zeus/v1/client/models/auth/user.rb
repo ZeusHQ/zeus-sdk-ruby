@@ -1,4 +1,4 @@
-module Zeus::V1::Client
+module ZeusClient::V1
     class User
         attr_accessor :id, :name, :email, :email_verified, :first_name, :last_name, :created_at, :updated_at
 

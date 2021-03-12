@@ -1,6 +1,6 @@
 require "httparty"
 
-module Zeus::V1::Client
+module ZeusClient::V1
     class Core
         include HTTParty
 

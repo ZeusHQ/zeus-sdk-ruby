@@ -2,7 +2,7 @@ require File.expand_path('lib/zeus/version', __dir__)
 
 Gem::Specification.new do |spec|
   spec.name          = "zeus_ruby"
-  spec.version       = Zeus::VERSION
+  spec.version       = ZeusClient::VERSION
   spec.authors       = ["Eric Campbell"]
   spec.email         = ["ericcampbell59@gmail.com"]
 

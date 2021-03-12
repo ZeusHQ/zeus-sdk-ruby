@@ -1,4 +1,4 @@
-module Zeus::V1::Client
+module ZeusClient::V1
     class Node
         attr_accessor :id, :document_id, :name, :type, :properties, :created_at, :updated_at
 
