@@ -1,6 +1,6 @@
 require "httparty"
 
-module ZeusClient::V1
+module ZeusSdk::V1
     class Multiplayer
         SUBDOMAIN = "multiplayer"
         LOCAL_PORT = 3006

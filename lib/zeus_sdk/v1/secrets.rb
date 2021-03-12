@@ -1,6 +1,6 @@
 require "httparty"
 
-module ZeusClient::V1
+module ZeusSdk::V1
     class Secrets
         SUBDOMAIN = "secrets"
         LOCAL_PORT = 3002

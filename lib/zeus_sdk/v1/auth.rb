@@ -1,7 +1,7 @@
 require "httparty"
 require "jwt"
 
-module ZeusClient::V1
+module ZeusSdk::V1
     class Auth
         SUBDOMAIN = "auth"
         LOCAL_PORT = 3003

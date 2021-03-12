@@ -1,4 +1,4 @@
-module ZeusClient::V1
+module ZeusSdk::V1
     class Document
         attr_accessor :id, :name, :created_at, :updated_at
 

@@ -1,8 +1,8 @@
 SECRETS_TEST_KEY = "sk_secrets_qBevMItbItSy9DXe7uopyA"
-Secrets = ZeusClient::V1::Secrets
+Secrets = ZeusSdk::V1::Secrets
 BAD_KEY = "bad_key"
 
-RSpec.describe ZeusClient::V1::Secrets do
+RSpec.describe ZeusSdk::V1::Secrets do
     tests_project_environment_crud(Secrets, SECRETS_TEST_KEY)
 
     client_zeus_valid = Secrets.new({zeus_auth_key: SECRETS_TEST_KEY})
@@ -10,11 +10,11 @@ RSpec.describe ZeusClient::V1::Secrets do
     env = client_zeus_valid.create_project_environment({ scope: WEB_SCOPE })
     client_zeus_valid.environment_id = env["object"]["id"]
 
-    client_private_valid = ZeusClient::V1::Secrets.new({ public_key: env["object"]["public_key"], secret_key: env["object"]["secret_key"] })
-    client_public_valid = ZeusClient::V1::Secrets.new({ public_key: env["object"]["public_key"] })
+    client_private_valid = ZeusSdk::V1::Secrets.new({ public_key: env["object"]["public_key"], secret_key: env["object"]["secret_key"] })
+    client_public_valid = ZeusSdk::V1::Secrets.new({ public_key: env["object"]["public_key"] })
 
-    client_private_invalid = ZeusClient::V1::Secrets.new({ public_key: BAD_KEY, secret_key: BAD_KEY })
-    client_public_invalid = ZeusClient::V1::Secrets.new({ public_key: BAD_KEY })
+    client_private_invalid = ZeusSdk::V1::Secrets.new({ public_key: BAD_KEY, secret_key: BAD_KEY })
+    client_public_invalid = ZeusSdk::V1::Secrets.new({ public_key: BAD_KEY })
 
     
     # VALID ZEUS CRUD
