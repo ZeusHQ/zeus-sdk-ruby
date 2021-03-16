@@ -52,6 +52,10 @@ module ZeusSdk::V1
             self.class.post("/api/v1/project_environments", body: {project_environment: project_environment}.to_json, headers: self.get_headers)
         end
 
+        def update_project_environment(id, project_environment)
+            self.class.put("/api/v1/project_environments/#{id}", body: {project_environment: project_environment}.to_json, headers: self.get_headers)
+        end
+
         def destroy_project_environment(id)
             self.class.delete("/api/v1/project_environments/#{id}", body: {}, headers: self.get_headers)
         end
