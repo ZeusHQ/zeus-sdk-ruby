@@ -56,9 +56,6 @@ module ZeusSdk::V1
 
         def list_nodes(query)
             resp = self.class.get("/api/v1/nodes", query: query, headers: self.get_headers).parsed_response
-            puts(query.inspect)
-            puts(resp.inspect)
-
             if resp["success"] == true
                 return resp["objects"].map {|d| Node.new(d) }
             else
