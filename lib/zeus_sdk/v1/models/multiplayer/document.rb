@@ -18,5 +18,9 @@ module ZeusSdk::V1
                 updated_at: self.updated_at
             }
         end
+
+        def to_s
+            "Document(id: #{self.document_id}, name: #{self.name})"
+        end
     end
 end

@@ -24,5 +24,9 @@ module ZeusSdk::V1
                 updated_at: self.updated_at
             }
         end
+
+        def to_s
+            "Node(id: #{self.node_id}, document_id: #{self.document_id}, name: #{self.name}, type: #{self.type}, properties: #{self.properties}, created_at: #{self.created_at}, updated_at: #{self.updated_at})"
+        end
     end
 end
