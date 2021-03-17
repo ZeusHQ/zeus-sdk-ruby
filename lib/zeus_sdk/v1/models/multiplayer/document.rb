@@ -1,9 +1,10 @@
 module ZeusSdk::V1
     class Document
-        attr_accessor :id, :name, :created_at, :updated_at
+        attr_accessor :raw, :document_id, :name, :created_at, :updated_at
 
         def initialize(doc)
-            self.id = doc["id"]
+            self.raw = doc
+            self.document_id = doc["id"]
             self.name = doc["name"]
             self.created_at = doc["created_at"]
             self.updated_at = doc["updated_at"]
@@ -11,7 +12,7 @@ module ZeusSdk::V1
 
         def as_json(options={})
             return {
-                id: self.id,
+                id: self.document_id,
                 name: self.name,
                 created_at: self.created_at,
                 updated_at: self.updated_at
