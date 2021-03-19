@@ -20,5 +20,6 @@ module ZeusSdk
     require "zeus_sdk/v1/models/auth/user"
     require "zeus_sdk/v1/models/multiplayer/document"
     require "zeus_sdk/v1/models/multiplayer/node"
+    require "zeus_sdk/v1/models/assets/image"
   end
 end
