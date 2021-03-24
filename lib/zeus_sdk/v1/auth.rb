@@ -44,13 +44,16 @@ module ZeusSdk::V1
 
     class AuthJWT
         class << self
-            def encode(payload, exp = 6.months.from_now)
-                payload[:exp] = exp.to_i
-                JWT.encode(payload, ENV["ZEUS_AUTH_SECRET_KEY"])
+            def encode(data, exp = 6.months.from_now)
+                payload = {
+                    data: data,
+                    exp: exp.to_i
+                }
+                JWT.encode(payload, ENV["ZEUS_AUTH_SECRET_KEY"], 'HS256')
             end
        
             def decode(token)
-                body = JWT.decode(token, ENV["ZEUS_AUTH_SECRET_KEY"])[0]
+                body = JWT.decode(token, ENV["ZEUS_AUTH_SECRET_KEY"], true, { algorithm: 'HS256' })[0]
                 HashWithIndifferentAccess.new body
             rescue
                 nil

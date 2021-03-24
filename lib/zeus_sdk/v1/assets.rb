@@ -36,6 +36,15 @@ module ZeusSdk::V1
             end
         end
 
+        def get_image_variants(id)
+            resp = self.class.get("/api/v1/images/#{id}/variants", headers: self.get_headers).parsed_response
+            if resp["success"] == true
+                return resp["object"]
+            else
+                return nil
+            end
+        end
+
         def update_image(id, image)
             resp = self.class.put("/api/v1/images/#{id}", body: {image: image}.to_json, headers: self.get_headers).parsed_response
             if resp["success"] == true
