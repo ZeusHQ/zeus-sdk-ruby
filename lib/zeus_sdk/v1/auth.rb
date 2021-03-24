@@ -53,7 +53,7 @@ module ZeusSdk::V1
                 JWT.encode(payload, key, 'HS256')
             end
        
-            def decode(token)
+            def decode(token, key)
                 #ENV["ZEUS_AUTH_SECRET_KEY"]
                 body = JWT.decode(token, key, true, { algorithm: 'HS256' })[0]
                 HashWithIndifferentAccess.new body
