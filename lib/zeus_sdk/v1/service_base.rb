@@ -17,9 +17,9 @@ module ZeusSdk::V1
             end
 
             if params[:env] == "dev" || params[:env] == "development"
-                self.base_uri "http://localhost:#{klass::LOCAL_PORT}"
+                self.base_uri "http://localhost:#{self.class::LOCAL_PORT}"
             else
-                self.base_uri "https://#{klass::SUBDOMAIN}.zeusdev.io"
+                self.base_uri "https://#{self.class::SUBDOMAIN}.zeusdev.io"
             end
 
             @zeus_auth_key = params[:zeus_auth_key]
