@@ -9,11 +9,17 @@ module ZeusSdk::V1
             klass.base_uri ZeusSdk::IS_PRODUCTION ? "https://#{klass::SUBDOMAIN}.zeusdev.io" : "http://localhost:#{klass::LOCAL_PORT}"
         end
         
-        attr_accessor :zeus_auth_key, :public_key, :secret_key, :project_id, :scope, :environment_id
+        attr_accessor :zeus_auth_key, :public_key, :env, :secret_key, :project_id, :scope, :environment_id
 
         def initialize(params)
             if params[:zeus_auth_key] == nil && params[:public_key] == nil && params[:secret_key] == nil
                 throw "Must initialize with public_key and secret_key"
+            end
+
+            if params[:env] == "dev" || params[:env] == "development"
+                self.base_uri "http://localhost:#{klass::LOCAL_PORT}"
+            else
+                self.base_uri "https://#{klass::SUBDOMAIN}.zeusdev.io"
             end
 
             @zeus_auth_key = params[:zeus_auth_key]
