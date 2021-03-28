@@ -15,7 +15,7 @@ module ZeusSdk::V1
         def as_json(options={})
             {
                 id: self.id,
-                self.role_id: self.role_id,
+                role_id: self.role_id,
                 name: self.name,
                 created_at: self.created_at,
                 updated_at: self.updated_at

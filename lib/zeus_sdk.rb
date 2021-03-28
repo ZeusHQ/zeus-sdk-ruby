@@ -18,6 +18,12 @@ module ZeusSdk
 
     # models
     require "zeus_sdk/v1/models/auth/user"
+    require "zeus_sdk/v1/models/auth/role"
+    require "zeus_sdk/v1/models/auth/role_user"
+    require "zeus_sdk/v1/models/auth/permission"
+    require "zeus_sdk/v1/models/auth/waiting_list"
+    require "zeus_sdk/v1/models/auth/waiting_list_email"
+    
     require "zeus_sdk/v1/models/multiplayer/document"
     require "zeus_sdk/v1/models/multiplayer/node"
     require "zeus_sdk/v1/models/assets/image"
