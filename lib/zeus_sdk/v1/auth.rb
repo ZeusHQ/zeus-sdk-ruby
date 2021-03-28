@@ -22,6 +22,8 @@ module ZeusSdk::V1
             resp = self.class.post("/api/v1/users", body: {user: user}.to_json, headers: self.get_headers).parsed_response
         end
 
+
+
         def get_users(query)
             resp = self.class.get("/api/v1/users", query: query, headers: self.get_headers).parsed_response
 
@@ -67,6 +69,8 @@ module ZeusSdk::V1
                 return nil
             end
         end
+
+
 
         def get_waiting_lists(query)
             resp = self.class.get("/api/v1/waiting_lists", query: query, headers: self.get_headers).parsed_response
@@ -118,6 +122,8 @@ module ZeusSdk::V1
             end
         end
 
+
+
         def get_roles(query)
             resp = self.class.get("/api/v1/roles", query: query, headers: self.get_headers).parsed_response
 
@@ -138,8 +144,8 @@ module ZeusSdk::V1
             end
         end
 
-        def create_role(role)
-            resp = self.class.post("/api/v1/roles/#{id}", body: {role: role}.to_json, headers: self.get_headers).parsed_response
+        def create_role(attributes)
+            resp = self.class.post("/api/v1/roles/#{id}", body: {role: attributes}.to_json, headers: self.get_headers).parsed_response
 
             if resp["success"] == true
                 return Role.new(resp["object"])
@@ -167,6 +173,60 @@ module ZeusSdk::V1
                 return nil
             end
         end
+
+
+
+        def get_role_users(query)
+            resp = self.class.get("/api/v1/role_users", query: query, headers: self.get_headers).parsed_response
+
+            if resp["success"] == true
+                return resp["objects"].map {|u| RoleUser.new(u) }
+            else
+                return nil
+            end
+        end
+
+        def get_role_user(id)
+            resp = self.class.get("/api/v1/role_users/#{id}", headers: self.get_headers).parsed_response
+
+            if resp["success"] == true
+                return RoleUser.new(resp["object"])
+            else
+                return nil
+            end
+        end
+
+        def create_role_user(attributes)
+            resp = self.class.post("/api/v1/role_users/#{id}", body: {role_user: attributes}.to_json, headers: self.get_headers).parsed_response
+
+            if resp["success"] == true
+                return RoleUser.new(resp["object"])
+            else
+                return nil
+            end
+        end
+
+        def update_role_user(id, attributes)
+            resp = self.class.put("/api/v1/role_users/#{id}", body: {role_user: attributes}.to_json, headers: self.get_headers).parsed_response
+
+            if resp["success"] == true
+                return RoleUser.new(resp["object"])
+            else
+                return nil
+            end
+        end
+
+        def destroy_role_user(id)
+            resp = self.class.delete("/api/v1/role_users/#{id}", headers: self.get_headers).parsed_response
+
+            if resp["success"] == true
+                return RoleUser.new(resp["object"])
+            else
+                return nil
+            end
+        end
+
+
 
         def get_permissions(query)
             resp = self.class.get("/api/v1/permissions", query: query, headers: self.get_headers).parsed_response
