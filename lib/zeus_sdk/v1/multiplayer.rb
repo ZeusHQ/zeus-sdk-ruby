@@ -10,94 +10,55 @@ module ZeusSdk::V1
 
         def list_documents(query)
             resp = self.class.get("/api/v1/documents", query: query, headers: self.get_headers).parsed_response
-            if resp["success"] == true
-                return resp["objects"].map {|d| Document.new(d) }
-            else
-                puts(resp.inspect)
-                return nil
-            end
+            return ApiResponse.new(resp)
         end
 
         def create_document(document)
-            resp = self.class.post("/api/v1/documents", body: {document: document}.to_json, headers: self.get_headers).parsed_response
-            if resp["success"] == true
-                return Document.new(resp["object"])
-            else
-                return nil
-            end
+            body = {document: document}
+            resp = self.class.post("/api/v1/documents", body: body.to_json, headers: self.get_headers).parsed_response
+            return ApiResponse.new(resp)
         end
 
         def get_document(id)
             resp = self.class.get("/api/v1/documents/#{id}", headers: self.get_headers).parsed_response
-            if resp["success"] == true
-                return Document.new(resp["object"])
-            else
-                return nil
-            end
+            return ApiResponse.new(resp)
         end
 
         def update_document(id, document)
-            resp = self.class.put("/api/v1/documents/#{id}", body: {document: document}.to_json, headers: self.get_headers).parsed_response
-            if resp["success"] == true
-                return Document.new(resp["object"])
-            else
-                return nil
-            end
+            body = {document: document}
+            resp = self.class.put("/api/v1/documents/#{id}", body: body.to_json, headers: self.get_headers).parsed_response
+            return ApiResponse.new(resp)
         end
 
         def destroy_document(id)
             resp = self.class.delete("/api/v1/documents/#{id}", headers: self.get_headers).parsed_response
-            if resp["success"] == true
-                return Document.new(resp["object"])
-            else
-                return nil
-            end
+            return ApiResponse.new(resp)
         end
 
         def list_nodes(query)
             resp = self.class.get("/api/v1/nodes", query: query, headers: self.get_headers).parsed_response
-            if resp["success"] == true
-                return resp["objects"].map {|d| Node.new(d) }
-            else
-                
-                return nil
-            end
+            return ApiResponse.new(resp)
         end
 
         def create_node(node)
-            resp = self.class.post("/api/v1/nodes", body: {node: node}.to_json, headers: self.get_headers).parsed_response
-            if resp["success"] == true
-                return Node.new(resp["object"])
-            else
-                return nil
-            end
+            body = {node: node}
+            resp = self.class.post("/api/v1/nodes", body: body.to_json, headers: self.get_headers).parsed_response
+            return ApiResponse.new(resp)
         end
 
         def get_node(id)
             resp = self.class.get("/api/v1/nodes/#{id}", headers: self.get_headers).parsed_response
-            if resp["success"] == true
-                return Node.new(resp["object"])
-            else
-                return nil
-            end
+            return ApiResponse.new(resp)
         end
 
         def update_node(id, node)
             resp = self.class.put("/api/v1/nodes/#{id}", body: {node: node}.to_json, headers: self.get_headers).parsed_response
-            if resp["success"] == true
-                return Node.new(resp["object"])
-            else
-                return nil
-            end
+            return ApiResponse.new(resp)
         end
 
         def destroy_node(id)
             resp = self.class.delete("/api/v1/nodes/#{id}", headers: self.get_headers).parsed_response
-            if resp["success"] == true
-                return Node.new(resp["object"])
-            else
-                return nil
-            end
+            return ApiResponse.new(resp)
         end
     end
 

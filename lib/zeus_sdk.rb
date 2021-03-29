@@ -17,6 +17,7 @@ module ZeusSdk
     require "zeus_sdk/v1/multiplayer"
 
     # models
+    require "zeus_sdk/v1/models/api_response"
     require "zeus_sdk/v1/models/auth/user"
     require "zeus_sdk/v1/models/auth/role"
     require "zeus_sdk/v1/models/auth/role_user"
