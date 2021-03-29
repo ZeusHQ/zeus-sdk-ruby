@@ -6,8 +6,6 @@ module ZeusSdk::V1
             return if raw.blank?
             self.raw = raw
             self.success = raw["success"] if raw.has_key?("success")
-            self.objects = raw["objects"] if raw.has_key?("objects")
-            self.object = raw["object"] if raw.has_key?("object")
             self.num_pages = raw["num_pages"] if raw.has_key?("num_pages")
             self.total = raw["total"] if raw.has_key?("total")
             self.page = raw["page"] if raw.has_key?("page")
