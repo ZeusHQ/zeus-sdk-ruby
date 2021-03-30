@@ -1,6 +1,6 @@
 module ZeusSdk::V1
     class User
-        attr_accessor :raw, :user_id, :name, :email, :email_verified, :first_name, :last_name, :created_at, :updated_at
+        attr_accessor :raw, :user_id, :name, :email, :email_verified, :first_name, :last_name, :created_at, :updated_at, :touched_at, :deleted_at
 
         def initialize(user)
             return if user.blank?
@@ -13,6 +13,8 @@ module ZeusSdk::V1
             self.email_verified = user["email_verified"] if user.has_key?("email_verified")
             self.created_at = user["created_at"] if user.has_key?("created_at")
             self.updated_at = user["updated_at"] if user.has_key?("updated_at")
+            self.touched_at = user["touched_at"] if user.has_key?("touched_at")
+            self.deleted_at = user["deleted_at"] if user.has_key?("deleted_at")
         end
 
         def as_json(options={})
@@ -24,7 +26,9 @@ module ZeusSdk::V1
                 email: self.email,
                 email_verified: self.email_verified,
                 created_at: self.created_at,
-                updated_at: self.updated_at
+                updated_at: self.updated_at,
+                touched_at: self.touched_at,
+                deleted_at: self.deleted_at
             }
         end
 

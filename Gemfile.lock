@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    zeus_sdk (0.6.6)
+    zeus_sdk (0.6.7)
       activesupport (~> 6.1.1)
       httparty (~> 0.18.1)
       jwt (~> 2.2.2)
