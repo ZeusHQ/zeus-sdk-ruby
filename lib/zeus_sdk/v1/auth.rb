@@ -90,6 +90,40 @@ module ZeusSdk::V1
 
 
 
+        def get_waiting_list_emails(query)
+            resp = self.class.get("/api/v1/waiting_list_emails", query: query, headers: self.get_headers).parsed_response
+
+            return ApiResponse.new(resp)
+        end
+
+        def get_waiting_list_email(id)
+            resp = self.class.get("/api/v1/waiting_list_emails/#{id}", headers: self.get_headers).parsed_response
+
+            return ApiResponse.new(resp)
+        end
+
+        def create_waiting_list_email(waiting_list_email)
+            body = {waiting_list_email: waiting_list_email}
+            resp = self.class.post("/api/v1/waiting_list_emails/#{id}", body: body.to_json, headers: self.get_headers).parsed_response
+
+            return ApiResponse.new(resp)
+        end
+
+        def update_waiting_list_email(id, attributes)
+            body = {waiting_list_email: attributes}
+            resp = self.class.put("/api/v1/waiting_list_emails/#{id}", body: body.to_json, headers: self.get_headers).parsed_response
+
+            return ApiResponse.new(resp)
+        end
+
+        def destroy_waiting_list_email(id)
+            resp = self.class.delete("/api/v1/waiting_list_emails/#{id}", headers: self.get_headers).parsed_response
+
+            return ApiResponse.new(resp)
+        end
+
+
+
         def get_roles(query)
             resp = self.class.get("/api/v1/roles", query: query, headers: self.get_headers).parsed_response
 
