@@ -14,7 +14,7 @@ module ZeusSdk::V1
 
         def objects
             objs = self.raw["objects"]
-            return nil if objs.blank?
+            return [] if objs.blank?
             case self.type
             when "Zeus::Auth::User" then objs.map {|obj| User.new(obj) }
             when "Zeus::Auth::Permission" then objs.map {|obj| Permission.new(obj) }
