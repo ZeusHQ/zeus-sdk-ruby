@@ -15,6 +15,13 @@ module ZeusSdk::V1
             return ApiResponse.new(resp)
         end
 
+        def login_with_email_password(session)
+            body = {user: user}
+            resp = self.class.post("/api/v1/sessions", body: body.to_json, headers: self.get_headers).parsed_response
+
+            return ApiResponse.new(resp)
+        end
+
         def signup_with_email_password(user)
             body = {user: user}
             resp = self.class.post("/api/v1/users", body: body.to_json, headers: self.get_headers).parsed_response
