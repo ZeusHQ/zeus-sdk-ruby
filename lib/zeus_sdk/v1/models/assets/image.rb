@@ -4,7 +4,7 @@ module ZeusSdk::V1
 
         def initialize(obj)
             self.raw = obj
-            self.image_id = obj["id"]
+            self.id = obj["id"]
             self.urls = obj["urls"]
             self.presigned_url = obj["presigned_url"]
             self.presigned_post = obj["presigned_post"]
@@ -14,7 +14,7 @@ module ZeusSdk::V1
 
         def as_json(options={})
             return {
-                id: self.image_id,
+                id: self.id,
                 urls: self.urls,
                 presigned_url: self.presigned_url,
                 presigned_post: self.presigned_post,
